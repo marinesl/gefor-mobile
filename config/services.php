@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'external_api' => [
+        'url' => env('API_URL'),
+    ],
+
 ];

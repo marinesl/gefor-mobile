@@ -10,21 +10,24 @@
     </head>
     <body>
         <div class=”nativephp-safe-area”>
-            <h1>Liste des cours</h1>
+            <h1>Page signature</h1>
 
-            @forelse($cours as $c)
-                <div style="margin-bottom: 16px; border: 1px solid #ccc; padding: 12px;">
-                    <p><strong>Matière :</strong> {{ $c['matiere'] ?? '' }}</p>
-                    <p><strong>Date :</strong> {{ $c['date'] ?? '' }}</p>
-                    <p><strong>Heure début :</strong> {{ $c['heure_debut'] ?? '' }}</p>
-                    <p><strong>Heure fin :</strong> {{ $c['heure_fin'] ?? '' }}</p>
-                    <p><strong>Salle :</strong> {{ $c['salle'] ?? '' }}</p>
-                    <p><strong>Professeur :</strong> {{ $c['professeur'] ?? '' }}</p>
-                    <a href="{{ route('signature') }}/{{ $c['id'] }}">Signer</a>
-                </div>
-            @empty
-                <p>Aucun cours trouvé.</p>
-            @endforelse
+            <div style="margin-bottom: 16px; border: 1px solid #ccc; padding: 12px;">
+                <p><strong>Matière :</strong> {{ $cours['matiere'] ?? '' }}</p>
+                <p><strong>Date :</strong> {{ $cours['date'] ?? '' }}</p>
+                <p><strong>Heure début :</strong> {{ $cours['heure_debut'] ?? '' }}</p>
+                <p><strong>Heure fin :</strong> {{ $cours['heure_fin'] ?? '' }}</p>
+                <p><strong>Salle :</strong> {{ $cours['salle'] ?? '' }}</p>
+                <p><strong>Professeur :</strong> {{ $cours['user']['name'] ?? '' }} {{ $cours['user']['prenom'] ?? '' }}</p>
+            </div>
+
+        <canvas id="signature-pad" class="signature-pad" width=400 height=200></canvas>
+
+            <div>
+                <button id="save">Enregistrer</button>
+                <button id="clear">Effacer</button>
+            </div>
+
         </div>
     </body>
 </html>
