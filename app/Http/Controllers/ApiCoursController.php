@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Client\ConnectionException;
+use App\Services\ApiService;
 
 class ApiCoursController extends Controller
 {
+    public function __construct(private readonly ApiService $api)
+    {
+    }
+
+    /**
+     * @throws ConnectionException
+     */
     public function index()
     {
-        $response = Http::baseUrl(config('services.api.url'))
-            ->acceptJson()
+        $response = $this->api->connect()
             ->get('/cours');
 
         if ($response->failed()) {
@@ -22,10 +28,12 @@ class ApiCoursController extends Controller
         ]);
     }
 
+    /**
+     * @throws ConnectionException
+     */
     public function show($id)
     {
-        $response = Http::baseUrl(config('services.api.url'))
-            ->acceptJson()
+        $response = $this->api->connect()
             ->get("/cours/{$id}");
 
         return view('signature', [
