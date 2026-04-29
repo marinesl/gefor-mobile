@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApiAuthController;
 use App\Http\Controllers\ApiCoursController;
+use App\Http\Controllers\ApiSignatureController;
 use Illuminate\Support\Facades\Route;
 
 // Temporary debug route to test HTTP 500 issue with /jump/qr
@@ -23,5 +24,7 @@ Route::get('/logout', [ApiAuthController::class, 'logout'])->name('logout')->mid
 Route::middleware('auth')->group(function () {
     Route::get('/accueil_session', [ApiCoursController::class, 'index'])->name('accueil_session');
     Route::get('/signature/{id}', [ApiCoursController::class, 'show'])->name('signature');
+
+    Route::post('/signature', [ApiSignatureController::class, 'store'])->name('signature.store');
 });
 

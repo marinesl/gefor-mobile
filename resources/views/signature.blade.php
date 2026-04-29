@@ -21,12 +21,23 @@
                 <p><strong>Professeur :</strong> {{ $cours['user']['name'] ?? '' }} {{ $cours['user']['prenom'] ?? '' }}</p>
             </div>
 
-        <canvas id="signature-pad" class="signature-pad" width=400 height=200></canvas>
+            <canvas id="signature-pad" class="signature-pad" width=400 height=200></canvas>
 
             <div>
-                <button id="save">Enregistrer</button>
-                <button id="clear">Effacer</button>
+                <form method="POST" action="{{ route('signature.store') }}" id="signature-form">
+                    @csrf
+                    <input type="hidden" name="cours_id" value="{{ $cours['id'] }}">
+                    <input type="hidden" name="signature" id="signature_input">
+
+                    <button type="submit" id="save">Enregistrer</button>
+                    <button type="button" id="clear">Effacer</button>
+                </form>
+
             </div>
+
+            @if (session('error'))
+                <p>{{ session('error') }}</p>
+            @endif
 
         </div>
     </body>

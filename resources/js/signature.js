@@ -7,13 +7,25 @@ var signaturePad = new SignaturePad(document.getElementById('signature-pad'), {
 var saveButton = document.getElementById('save');
 var cancelButton = document.getElementById('clear');
 
-saveButton.addEventListener('click', function (event) {
-  var data = signaturePad.toDataURL('image/png');
+// For form submission
+const signatureInput = document.getElementById('signature_input');
+const form = document.getElementById('signature-form');
 
-// Send data to server instead...
-  window.open(data);
+saveButton.addEventListener('submit', function (event) {
+    if (signaturePad.isEmpty()) {
+        event.preventDefault(); // stop submission
+        alert('Veuillez signer avant d\'enregistrer.');
+        return;
+    }
+
+    // Convert canvas to base64 and put it in the hidden input
+    signatureInput.value = signaturePad.toDataURL('image/png');
+
+    // Submit the form normally (Laravel handles it)
+    //form.submit();
 });
 
 cancelButton.addEventListener('click', function (event) {
+    event.preventDefault(); // stop submission
   signaturePad.clear();
 });
