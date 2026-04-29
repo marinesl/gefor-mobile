@@ -8,6 +8,15 @@
     </head>
     <body>
         <div class=”nativephp-safe-area”>
+            <p>Bonjour, {{ Auth::user()->name }}</p>
+
+            <p>
+                <a href="{{ route('logout') }}"
+                   class="btn btn-outline-danger">
+                    Se déconnecter
+                </a>
+            </p>
+
             <h1>Liste des cours</h1>
 
             @forelse($cours as $c)
