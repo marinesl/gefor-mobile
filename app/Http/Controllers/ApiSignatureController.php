@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\ApiService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class ApiSignatureController extends Controller
 {
-    public function __construct(private readonly ApiService $api)
-    {
-    }
-
     /**
      * @throws ConnectionException
      */
@@ -26,7 +22,9 @@ class ApiSignatureController extends Controller
         // Add the authenticated user id explicitly
         $data['user_id'] = Auth::id();
 
-        $response = $this->api->connect()->post('/signature', $data);
+        $response = Http::baseUrl(config('services.api.url'))
+                    ->acceptJson()
+                    ->post('/signature', $data);
 
         if (! $response->successful()) {
             // Log / handle error
