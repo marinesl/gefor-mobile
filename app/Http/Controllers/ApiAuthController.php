@@ -3,19 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Services\ApiService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class ApiAuthController extends Controller
 {
-    public function __construct(private readonly ApiService $api)
-    {
-    }
-
     public function showLoginForm()
     {
         return view('login');
@@ -31,7 +27,9 @@ class ApiAuthController extends Controller
             'password' => ['required', 'string'],
         ]);
 
-        $response = $this->api->connect()->post("/auth/login", $data);
+        $response = Http::baseUrl(config('services.api.url'))
+                    ->acceptJson()
+                    ->post("/auth/login", $data);
 
         if (! $response->successful()) {
             return back()
@@ -78,7 +76,9 @@ class ApiAuthController extends Controller
         $token = Session::get('remote_auth_token');
 
         if ($token) {
-            $this->api->connect()->post("/api/auth/logout/{$token}");
+            Http::baseUrl(config('services.api.url'))
+                ->acceptJson()
+                ->post("/api/auth/logout/{$token}");
         }
 
         Session::forget('remote_auth_token');
