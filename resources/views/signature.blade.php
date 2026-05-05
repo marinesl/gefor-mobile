@@ -29,7 +29,7 @@
                     <input type="hidden" name="cours_id" value="{{ $cours['id'] }}">
                     <input type="hidden" name="signature" id="signature_input">
 
-                    <button type="submit" id="save">Enregistrer</button>
+                    <button type="button" id="save">Enregistrer</button>
                     <button type="button" id="clear">Effacer</button>
                 </form>
 

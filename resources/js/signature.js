@@ -11,7 +11,7 @@ var cancelButton = document.getElementById('clear');
 const signatureInput = document.getElementById('signature_input');
 const form = document.getElementById('signature-form');
 
-saveButton.addEventListener('submit', function (event) {
+saveButton.addEventListener('click', function (event) {
     if (signaturePad.isEmpty()) {
         event.preventDefault(); // stop submission
         alert('Veuillez signer avant d\'enregistrer.');
@@ -22,10 +22,10 @@ saveButton.addEventListener('submit', function (event) {
     signatureInput.value = signaturePad.toDataURL('image/png');
 
     // Submit the form normally (Laravel handles it)
-    //form.submit();
+    form.submit();
 });
 
 cancelButton.addEventListener('click', function (event) {
     event.preventDefault(); // stop submission
-  signaturePad.clear();
+    signaturePad.clear();
 });

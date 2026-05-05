@@ -6,6 +6,7 @@ use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 
 class ApiSignatureController extends Controller
 {
@@ -24,6 +25,7 @@ class ApiSignatureController extends Controller
 
         $response = Http::baseUrl(config('services.api.url'))
                     ->acceptJson()
+                    ->withToken(Session::get('remote_auth_token')) // Voir ApiAuthController
                     ->post('/signature', $data);
 
         if (! $response->successful()) {

@@ -19,6 +19,10 @@
 
             <h1>Liste des cours</h1>
 
+            @if (session('status'))
+                <p>{{ session('status') }}</p>
+            @endif
+
             @forelse($cours as $c)
                 <div style="margin-bottom: 16px; border: 1px solid #ccc; padding: 12px;">
                     <p><strong>Matière :</strong> {{ $c['matiere'] ?? '' }}</p>
