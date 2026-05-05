@@ -12,11 +12,6 @@ use Illuminate\Support\Str;
 
 class ApiAuthController extends Controller
 {
-    public function showLoginForm()
-    {
-        return view('login');
-    }
-
     /**
      * @throws ConnectionException
      */
@@ -65,7 +60,7 @@ class ApiAuthController extends Controller
         // Store the remote token in session so App B can call App A as this user
         Session::put('remote_auth_token', $token);
 
-        return redirect()->intended('/accueil_session');
+        return redirect()->route('accueil_session');
     }
 
     /**
@@ -78,7 +73,7 @@ class ApiAuthController extends Controller
         if ($token) {
             Http::baseUrl(config('services.api.url'))
                 ->acceptJson()
-                ->post("/api/auth/logout/{$token}");
+                ->post("/auth/logout/{$token}");
         }
 
         Session::forget('remote_auth_token');
