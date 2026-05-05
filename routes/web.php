@@ -15,7 +15,7 @@ Route::get('/', function () {
         return redirect()->route('accueil_session');
     }
 
-    return app(ApiAuthController::class)->showLoginForm();
+    return view('login');
 })->name('login');
 
 Route::post('/login', [ApiAuthController::class, 'login'])->name('login.post');
