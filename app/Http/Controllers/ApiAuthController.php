@@ -73,6 +73,7 @@ class ApiAuthController extends Controller
         if ($token) {
             Http::baseUrl(config('services.api.url'))
                 ->acceptJson()
+                ->withToken(Session::get('remote_auth_token'))
                 ->post("/auth/logout/{$token}");
         }
 

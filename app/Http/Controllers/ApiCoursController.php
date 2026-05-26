@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 
 class ApiCoursController extends Controller
 {
@@ -14,6 +15,7 @@ class ApiCoursController extends Controller
     {
         $response = Http::baseUrl(config('services.api.url'))
                     ->acceptJson()
+                    ->withToken(Session::get('remote_auth_token'))
                     ->get('/cours');
 
         if ($response->failed()) {
@@ -32,6 +34,7 @@ class ApiCoursController extends Controller
     {
         $response = Http::baseUrl(config('services.api.url'))
                     ->acceptJson()
+                    ->withToken(Session::get('remote_auth_token'))
                     ->get("/cours/{$id}");
 
         return view('signature', [
